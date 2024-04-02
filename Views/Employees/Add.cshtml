@@ -1,0 +1,40 @@
+﻿@model myFirstWeb.Models.AddEmployeeViewModel
+@{
+
+}
+
+<h1>Add Employee</h1>
+
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name" required>
+       
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Email Adress</label>
+        <input type="email" class="form-control" asp-for="Email" required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Salary</label>
+        <input type="number" class="form-control" asp-for="Salary" required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Date Of Birth</label>
+        <input type="Date" class="form-control" asp-for="DateOfBirth" required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Department</label>
+        <input type="text" class="form-control" asp-for="Department" required>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,68 @@
+﻿@model List<myFirstWeb.Models.Employee>
+@{
+}
+
+<h1>Employees</h1>
+
+<form method="post" id="search-form" class="mt-5">
+	<div class="mb-3">
+		<label for="name" class="form-label">Name</label>
+		<input type="text" class="form-control" id="name" name="name" aria-describedby="name">
+	</div>
+	<div class="mb-3">
+		<label for="email" class="form-label">Email</label>
+		<input type="email" class="form-control" id="email" name="email" aria-describedby="email">
+	</div>
+	<div class="mb-3">
+		<label for="salary" class="form-label">Salary</label>
+		<input type="number" class="form-control" id="salary" name="salary" aria-describedby="salary">
+	</div>
+	<div class="mb-3">
+		<label for="dateOfBirth" class="form-label">Date Of Birth</label>
+		<input type="date" class="form-control" id="dateofbirth" name="dateOfBirth" aria-describedby="dateOfBirth">
+	</div>
+	<div class="mb-3">
+		<label for="department" class="form-label">Department</label>
+		<input type="text" class="form-control" id="department" name="department" aria-describedby="position">
+	</div>
+	<button type="submit" class="btn btn-success" id="save-button">Search</button>
+	<button type="submit" class="btn btn-warning" id="reset-button">Reset</button>
+</form>
+
+<br />
+<table class="table table-striped table-hover"> 
+	<thead class="table-primary">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Name <i class="fa-solid fa-sort" id="sort-icon"></i></th>
+			<th scope="col">Email</th>
+			<th scope="col">Salary <i class="fa-solid fa-sort" id="sort-salary"></i></th>
+			<th scope="col">Date Of Birth <i class="fa-solid fa-sort" id="sort-date"></i></th>
+			<th scope="col">Department <i class="fa-solid fa-sort" id="sort-department"></i></th>
+			<th scope="col" class="text-center">Action</th>
+		</tr>
+	</thead>
+	<tbody> 
+		@foreach (var employee in Model)
+		{
+			<tr>
+				<td scope="row">@employee.ID</td>
+				<td>@employee.Name</td>
+				<td>@employee.Email</td>
+				<td>@employee.Salary</td>
+				<td>@employee.DateOfBirth.ToString("yyyy-MM-dd")</td>
+				<td>@employee.Department</td>
+				<td>
+					<form asp-action="Delete" asp-controller="Employees" method="post">
+					<a type="button" class="btn btn-warning ms-2" href="Employees/View/@employee.ID">Edit</a>
+						<input type="hidden" name="id" value="@employee.ID">
+						<button type="submit" class="btn btn-danger ms-2" onclick="return confirm('Are you sure you want to delete @employee.Name?')">Delete</button>
+					</form>
+					</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<a asp-controller="Employees" asp-action="Add">
+	<button type="button" class="btn btn-primary">Add</button>
+</a>

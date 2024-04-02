@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - myFirstWeb</title>
+    <link rel="stylesheet" href="~/fontawesome-free-6.5.1-web/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/myFirstWeb.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">myFirstWeb</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Index">Employees</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"> @ViewBag.Message</a>
+                        </li>
+                    </ul>
+                   
+                            @Html.Raw(TempData["msg"])
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - myFirstWeb - <a asp-area="" asp-controller="Employees" asp-action="Index">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#my-input").click(function () {
+                $(this).val("");
+            });
+            $("#my-input1").click(function () {
+                $(this).val("");
+            });
+        });
+        const nameTermInput = document.getElementById("name");
+        const emailTermInput = document.getElementById("email");
+        const salaryTermInput = document.getElementById("salary");
+        const departmentTermInput = document.getElementById("department");
+        const dateOfBirthTermInput = document.getElementById("name");
+        const reset = document.getElementById("reset-button");
+        const saveButton = document.getElementById("save-button");
+
+        saveButton.addEventListener("click", () => {
+            const name = nameTermInput.value;
+            const email = emailTermInput.value;
+            const salary = salaryTermInput.value
+            const department = departmentTermInput.value
+            const date = dateOfBirthTermInput.value
+            const data = {
+                name: name,
+                email: email,
+                salary: salary,
+                department: department,
+                date: date
+                }
+
+            const stringifiedData = JSON.stringify(data);
+
+            localStorage.setItem("userData", stringifiedData);
+        })
+
+        window.addEventListener("load", () => {
+            const searchTerm = localStorage.getItem("userData");
+            const userObject = JSON.parse(searchTerm)
+            if (userObject) {
+               nameTermInput.value = userObject.name;
+                emailTermInput.value = userObject.email;
+                salaryTermInput.value = userObject.salary;
+                departmentTermInput.value = userObject.department
+                dateOfBirthTermInput.value = userObject.date;
+            }
+        });
+
+        reset.addEventListener("click", () => {
+            localStorage.removeItem("userData");
+            nameTermInput.value = ''
+            emailTermInput.value= ''
+            salaryTermInput.value=''
+            departmentTermInput.value=''
+            dateOfBirthTermInput.value=''
+        });
+
+        let sortOrder = localStorage.getItem('sortOrder') || 'asc';
+
+        document.getElementById('sort-icon').addEventListener('click', () => {
+
+            const sortBy = 'name'//ria (dynamic if needed)
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+            updateUrlWithSorting(sortBy, sortOrder);
+        });
+
+        document.getElementById('sort-department').addEventListener('click', () => {
+            const sortBy = 'department'
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+            updateUrlWithSorting(sortBy, sortOrder)
+        })
+
+        document.getElementById('sort-salary').addEventListener('click', () => {
+
+            const sortBy = 'salary'//ria (dynamic if needed)
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+            updateUrlWithSorting(sortBy, sortOrder);
+        });
+
+        document.getElementById('sort-date').addEventListener('click', () => {
+
+            const sortBy = 'DateOfBirth'//ria (dynamic if needed)
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+            updateUrlWithSorting(sortBy, sortOrder);
+        });
+
+        function updateUrlWithSorting(sortBy, sortOrder) {
+            const currentUrl = new URL(window.location.href);
+            const queryParams = new URLSearchParams(currentUrl.search);
+
+            queryParams.set('sortBy', encodeURIComponent(sortBy));
+            queryParams.set('sortOrder', encodeURIComponent(sortOrder));
+
+            currentUrl.search = queryParams.toString();
+
+            window.location.href = currentUrl.toString();
+
+            localStorage.setItem('sortOrder', sortOrder);
+        }
+
+
+      
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
