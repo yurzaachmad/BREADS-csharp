@@ -16,12 +16,16 @@ namespace myFirstWeb.Data
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> Users { get; set; }
+       public DbSet<Project> Projects { get; set; }
+	//	public DbSet<ProjectEmployee> Projectss { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<User>().ToTable("User");
-        }
+            modelBuilder.Entity<ProjectEmployee>().ToTable("Task");
+		//	modelBuilder.Entity<Project>().ToTable("Project");
+		}
 
         public DbSet<myFirstWeb.Models.Employee> Employee { get; set; } = default!;
     }
