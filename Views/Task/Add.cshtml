@@ -1,0 +1,35 @@
+﻿@model myFirstWeb.Models.AddTask
+<h1>Add Task</h1>
+
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Task</label>
+        <input type="text" class="form-control" asp-for="ProjectName" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Start Date</label>
+        <input type="Date" class="form-control" asp-for="StartDate"  required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">End Date</label>
+        <input type="Date" class="form-control" asp-for="EndDate" required>
+
+    </div>
+    <div class="mb-3">
+        <label for="EmployeeId" class="form-label">Employee</label>
+        <select class="form-control" asp-for="SelectedEmployeeId" required>
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in ViewData["employees"] as List<Employee>)
+            {
+                <option value="@employee.ID" asp-for="SelectedEmployeeId">@employee.Name</option>
+            }
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
