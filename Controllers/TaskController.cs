@@ -27,7 +27,7 @@ namespace myFirstWeb.Controllers
 							EndDate = b.EndDate,
 							EmployeeName = p.Name,
 							Complete = b.Complete
-						}; // Select desired properties
+						};
 			var projects = await query.ToListAsync();
 			return View(projects);
 		}
@@ -54,7 +54,7 @@ namespace myFirstWeb.Controllers
            var employee = await employeeContext.Employees.FindAsync(duty.SelectedEmployeeId );
             if (employee != null)
            {
-               task.ID_employeeID = employee.ID; // Set the actual Employee object (optional)
+               task.ID_employeeID = employee.ID;
 			}
 
             await employeeContext.Tasks.AddAsync(task);
