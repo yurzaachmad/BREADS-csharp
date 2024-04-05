@@ -62,6 +62,63 @@ namespace myFirstWeb.Controllers
             return RedirectToAction("Index");
         }
 
+		[HttpGet]
+		public async Task<IActionResult> View (Guid id)
+		{
+			var duty = await employeeContext.Tasks.FirstOrDefaultAsync(x => x.ID == id);
+			if (duty != null)
+			{
+                var employees = await employeeContext.Employees.ToListAsync();
+                ViewData["employees"] = employees;
+				var employee = await employeeContext.Employees.FirstOrDefaultAsync(x => x.ID == duty.ID_employeeID);
+				ViewData["employee"] = employee.Name + ", " + employee.Department;
+				ViewData["idEmployee"] = employee.ID;
+                var viewModel = new UpdateTaskViewModel
+				{
+					ID = duty.ID,
+					TaskName = duty.Task,
+					StartDate = duty.StartDate,
+					EndDate = duty.EndDate,
+					Complete = duty.Complete,
+					Employee = duty.ID_employeeID.Value
+				};
+			return await Task.Run(() => View("View", viewModel));
+			}
+			  return RedirectToAction("index");
+		}
+
+		[HttpPost]
+        public async Task<IActionResult> View(UpdateTaskViewModel model)
+		{
+			var duty = await employeeContext.Tasks.FindAsync(model.ID);
+			if(duty != null)
+			{
+				duty.Task = model.TaskName;
+				duty.EndDate = model.EndDate;
+				duty.Complete = model.Complete;
+				duty.ID_employeeID = model.Employee;
+				duty.StartDate = model.StartDate;
+
+            await employeeContext.SaveChangesAsync();
+            return RedirectToAction("index");
+			}
+            return RedirectToAction("index");
+		}
+		[HttpPost]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+            var duty = await employeeContext.Tasks.FirstOrDefaultAsync(x => x.ID == id);
+
+            if (duty != null)
+            {
+                employeeContext.Tasks.Remove(duty);
+                await employeeContext.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("index");
+        }
+
 
     }
 }
