@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using myFirstWeb.Models;
+using myFirstWeb.Models.Domain;
 
 namespace myFirstWeb.Data
 {
@@ -17,15 +18,17 @@ namespace myFirstWeb.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> Users { get; set; }
        public DbSet<TaskClass> Tasks { get; set; }
-	//	public DbSet<ProjectEmployee> Projectss { get; set; }
+		public DbSet<Client> Clients { get; set; }
+        public DbSet<Development> Developments { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<TaskClass>().ToTable("Tasks");
-		//	modelBuilder.Entity<Project>().ToTable("Project");
-		}
+			modelBuilder.Entity<Client>().ToTable("Clients");
+            modelBuilder.Entity<Development>().ToTable("Developments");
+        }
 
         public DbSet<myFirstWeb.Models.Employee> Employee { get; set; } = default!;
     }

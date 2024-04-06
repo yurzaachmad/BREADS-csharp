@@ -1,0 +1,26 @@
+﻿@model myFirstWeb.Models.Domain.AddDevelopmentViewModel;
+@{
+
+}
+
+<h1>Add Project</h1>
+
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Project Name</label>
+        <input type="text" class="form-control" asp-for="ProjectName" required>
+
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Project Manager</label>
+        <input type="text" class="form-control" asp-for="ProjectManager" required>
+
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Client</label>
+        <input type="text" class="form-control" asp-for="SelectedID" required>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

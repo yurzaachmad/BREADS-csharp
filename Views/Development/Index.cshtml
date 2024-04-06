@@ -1,0 +1,53 @@
+﻿@model List<myFirstWeb.Models.Domain.ProjectClient>
+
+<h1>Development</h1>
+
+<form method="post" id="search-form" class="mt-5">
+	<div class="mb-3">
+		<label for="name" class="form-label">Project Name</label>
+		<input type="text" class="form-control" id="name" name="name" aria-describedby="name">
+	</div>
+	<div class="mb-3">
+		<label for="salary" class="form-label">Start Date</label>
+		<input type="number" class="form-control" id="salary" name="salary" aria-describedby="salary">
+	</div>
+	<div class="mb-3">
+		<label for="dateOfBirth" class="form-label">End Date</label>
+		<input type="date" class="form-control" id="dateofbirth" name="dateOfBirth" aria-describedby="dateOfBirth">
+	</div>
+	<button type="submit" class="btn btn-success" id="save-button">Search</button>
+	<button type="submit" class="btn btn-warning" id="reset-button">Reset</button>
+</form>
+<br />
+<table class="table table-striped table-hover">
+	<thead class="table-primary">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Name <i class="fa-solid fa-sort" id="sort-icon"></i></th>
+			<th scope="col">Project Manager</th>
+			<th scope="col">Client <i class="fa-solid fa-sort" id="sort-salary"></i></th>
+			<th scope="col" class="text-center">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var employee in Model)
+		{
+			<tr>
+				<td scope="row">@employee.DevelopmentID</td>
+				<td>@employee.ProjectName</td>
+				<td>@employee.ProjectManager</td>
+				<td>@employee.Client</td>
+				<td>
+					<form asp-action="Delete" asp-controller="Employees" method="post">
+						<a type="button" class="btn btn-warning ms-2" href="Employees/View/@employee.DevelopmentID">Edit</a>
+						<input type="hidden" name="id" value="@employee.DevelopmentID">
+						<button type="submit" class="btn btn-danger ms-2" onclick="return confirm('Are you sure you want to delete @employee.ProjectName?')">Delete</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<a asp-controller="Development" asp-action="Add">
+	<button type="button" class="btn btn-primary">Add</button>
+</a>
