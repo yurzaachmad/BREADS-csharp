@@ -38,8 +38,8 @@
 				<td>@employee.ProjectManager</td>
 				<td>@employee.Client</td>
 				<td>
-					<form asp-action="Delete" asp-controller="Employees" method="post">
-						<a type="button" class="btn btn-warning ms-2" href="Employees/View/@employee.DevelopmentID">Edit</a>
+					<form asp-action="Delete" asp-controller="Development" method="post">
+						<a type="button" class="btn btn-warning ms-2" href="Development/View/@employee.DevelopmentID">Edit</a>
 						<input type="hidden" name="id" value="@employee.DevelopmentID">
 						<button type="submit" class="btn btn-danger ms-2" onclick="return confirm('Are you sure you want to delete @employee.ProjectName?')">Delete</button>
 					</form>

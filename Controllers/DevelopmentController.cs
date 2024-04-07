@@ -14,8 +14,8 @@ namespace myFirstWeb.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var query = from b in employeeContext.Set<Development>()
-                        join p in employeeContext.Set<Client>() on b.ClientID equals p.ID
+            var query = from b in employeeContext.Developments
+                        join p in employeeContext.Clients on b.ClientID equals p.ID
                         select new ProjectClient
                         {
                             ProjectName = b.DevelopmentName,
@@ -29,6 +29,8 @@ namespace myFirstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            var data = await employeeContext.Clients.ToListAsync();
+            ViewBag.clients = data;
             return View();
         }
         [HttpPost]
@@ -44,6 +46,54 @@ namespace myFirstWeb.Controllers
 
             await employeeContext.Developments.AddAsync(project);
             await employeeContext.SaveChangesAsync();
+            return RedirectToAction("index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> View(Guid id)
+        {
+            var project = await employeeContext.Developments.FirstOrDefaultAsync(x => x.ID == id);
+            if(project != null)
+            {
+                var clients = await employeeContext.Clients.ToListAsync();
+                ViewBag.clients = clients;
+                var client = await employeeContext.Clients.FirstOrDefaultAsync(x => x.ID == project.ClientID);
+                ViewBag.client = client.ClientName;
+                ViewBag.clientID = client.ID;
+                var viewModel = new UpdateDevelopmentViewModel
+                {
+                    ID = project.ID,
+                    DevelopmentName = project.DevelopmentName,
+                    ProjectManager = project.ProjectManager,
+                    ClientID = project.ClientID.Value
+                };
+            return await Task.Run(() => View("View", viewModel));
+            }
+            return RedirectToAction("index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> View(UpdateDevelopmentViewModel RequestUpdate)
+        {
+            var project = await employeeContext.Developments.FindAsync(RequestUpdate.ID);
+            if(project != null)
+            {
+                project.DevelopmentName = RequestUpdate.DevelopmentName;
+                project.ProjectManager  = RequestUpdate.ProjectManager;
+                project.ClientID = RequestUpdate.ClientID;
+
+                await employeeContext.SaveChangesAsync();
+                return RedirectToAction("index");
+            }
+            return View("index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var project = await employeeContext.Developments.FindAsync(id);
+            if(project != null)
+            {
+                employeeContext.Developments.Remove(project);
+                await employeeContext.SaveChangesAsync();
+            }
             return RedirectToAction("index");
         }
     }

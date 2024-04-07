@@ -1,0 +1,37 @@
+﻿@model myFirstWeb.Models.Domain.UpdateDevelopmentViewModel
+
+<h1>Edit Project</h1>
+
+<form method="post" action="View" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">ID</label>
+        <input type="text" class="form-control" asp-for="ID" readonly>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="DevelopmentName">
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Project Manager</label>
+        <input type="text" class="form-control" asp-for="ProjectManager">
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Client</label>
+        <select class="form-control" asp-for="ClientID" required>
+            <option value="@ViewBag.clientID">@ViewBag.client </option>
+            @foreach (var client in ViewBag.clients )
+            {
+                <option value="@client.ID">@client.ClientName</option>
+            }
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,4 +1,5 @@
-﻿@model myFirstWeb.Models.Domain.AddDevelopmentViewModel;
+﻿@using myFirstWeb.Models.Domain
+@model myFirstWeb.Models.Domain.AddDevelopmentViewModel;
 @{
 
 }
@@ -18,8 +19,13 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Client</label>
-        <input type="text" class="form-control" asp-for="SelectedID" required>
-
+        <select class="form-control" asp-for="SelectedID" required>
+            <option value="">-- Select Client --</option>
+            @foreach (var employee in ViewBag.clients)
+            {
+                <option value="@employee.ID" asp-for="SelectedID">@employee.ClientName</option>
+            }
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
