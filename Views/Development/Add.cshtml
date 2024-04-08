@@ -23,7 +23,7 @@
             <option value="">-- Select Client --</option>
             @foreach (var employee in ViewBag.clients)
             {
-                <option value="@employee.ID" asp-for="SelectedID">@employee.ClientName</option>
+                <option value="@employee.ID">@employee.ClientName</option>
             }
         </select>
     </div>

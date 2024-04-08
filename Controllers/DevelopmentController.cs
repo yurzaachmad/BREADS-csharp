@@ -56,9 +56,6 @@ namespace myFirstWeb.Controllers
             {
                 var clients = await employeeContext.Clients.ToListAsync();
                 ViewBag.clients = clients;
-                var client = await employeeContext.Clients.FirstOrDefaultAsync(x => x.ID == project.ClientID);
-                ViewBag.client = client.ClientName;
-                ViewBag.clientID = client.ID;
                 var viewModel = new UpdateDevelopmentViewModel
                 {
                     ID = project.ID,

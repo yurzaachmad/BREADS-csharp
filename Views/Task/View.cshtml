@@ -38,7 +38,7 @@
     <div class="mb-3">
         <label for="EmployeeId" class="form-label">Employee</label>
         <select class="form-control" asp-for="Employee" required>
-            <option value="@ViewData["idEmployee"]" >@ViewData["employee"] </option>
+            <option>-- Select Employee - </option>
             @foreach (var employee in ViewData["employees"] as List<Employee>)
             {
                 <option value="@employee.ID">@employee.Name, @employee.Department</option>

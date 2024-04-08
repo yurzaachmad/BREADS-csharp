@@ -24,7 +24,7 @@
             <option value="">-- Select Employee --</option>
             @foreach (var employee in ViewData["employees"] as List<Employee>)
             {
-                <option value="@employee.ID" asp-for="SelectedEmployeeId">@employee.Name, @employee.Department</option>
+                <option value="@employee.ID">@employee.Name, @employee.Department</option>
             }
         </select>
     </div>
