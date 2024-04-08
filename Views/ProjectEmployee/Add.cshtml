@@ -1,0 +1,44 @@
+﻿@model myFirstWeb.Models.Domain.AddProjectContracViewModel
+<h1>Add Contract</h1>
+
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Project</label>
+        <select class="form-control" asp-for="IdProject" required>
+            <option value="">-- Select Project --</option>
+            @foreach (var project in ViewBag.Projects)
+            {
+                <option value="@project.ID">@project.DevelopmentName</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Employee</label>
+        <select class="form-control" asp-for="IdEmployee" required>
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in ViewBag.Employees)
+            {
+                <option value="@employee.ID">@employee.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Start Date</label>
+        <input type="Date" class="form-control" asp-for="startDate" required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">End Date</label>
+        <input type="Date" class="form-control" asp-for="endDate" required>
+
+    </div>
+  
+    
+   
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

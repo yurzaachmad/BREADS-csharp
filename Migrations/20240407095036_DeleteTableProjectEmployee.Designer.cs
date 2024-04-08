@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myFirstWeb.Data;
 
@@ -11,9 +12,11 @@ using myFirstWeb.Data;
 namespace myFirstWeb.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
-    partial class EmployeeContextModelSnapshot : ModelSnapshot
+    [Migration("20240407095036_DeleteTableProjectEmployee")]
+    partial class DeleteTableProjectEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,16 +70,9 @@ namespace myFirstWeb.Migrations
                     b.ToTable("Developments", (string)null);
                 });
 
-            modelBuilder.Entity("myFirstWeb.Models.Domain.ProjectContract", b =>
+            modelBuilder.Entity("myFirstWeb.Models.Domain.ProjectEmployees", b =>
                 {
                     b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Developments")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Employee")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("endDate")
@@ -90,11 +86,7 @@ namespace myFirstWeb.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Developments");
-
-                    b.HasIndex("Employee");
-
-                    b.ToTable("ProjectContracts", (string)null);
+                    b.ToTable("ProjectEmployees", (string)null);
                 });
 
             modelBuilder.Entity("myFirstWeb.Models.Employee", b =>
@@ -174,23 +166,23 @@ namespace myFirstWeb.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("myFirstWeb.Models.Domain.ProjectContract", b =>
+            modelBuilder.Entity("myFirstWeb.Models.Domain.ProjectEmployees", b =>
                 {
-                    b.HasOne("myFirstWeb.Models.Domain.Development", "IdProject")
+                    b.HasOne("myFirstWeb.Models.Domain.Development", "Development")
                         .WithMany()
-                        .HasForeignKey("Developments")
+                        .HasForeignKey("ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("myFirstWeb.Models.Employee", "IdEmployee")
+                    b.HasOne("myFirstWeb.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("Employee")
+                        .HasForeignKey("ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdEmployee");
+                    b.Navigation("Development");
 
-                    b.Navigation("IdProject");
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

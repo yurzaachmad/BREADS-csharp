@@ -20,6 +20,7 @@ namespace myFirstWeb.Data
        public DbSet<TaskClass> Tasks { get; set; }
 		public DbSet<Client> Clients { get; set; }
         public DbSet<Development> Developments { get; set; }
+       public DbSet<ProjectContract> ProjectContracts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,7 @@ namespace myFirstWeb.Data
             modelBuilder.Entity<TaskClass>().ToTable("Tasks");
 			modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Development>().ToTable("Developments");
+           modelBuilder.Entity<ProjectContract>().ToTable("ProjectContracts");
         }
 
         public DbSet<myFirstWeb.Models.Employee> Employee { get; set; } = default!;

@@ -1,0 +1,63 @@
+﻿@model List<myFirstWeb.Models.Domain.ProjectContractViewModel>
+@{
+}
+<h1>Contract Employee</h1>
+
+<form method="post" id="search-form" class="mt-5">
+	<div class="mb-3">
+		<label for="name" class="form-label">Project Name</label>
+		<input type="text" class="form-control" id="name" name="name" aria-describedby="name">
+	</div>
+	<div class="mb-3">
+		<label for="salary" class="form-label">Start Date</label>
+		<input type="number" class="form-control" id="salary" name="salary" aria-describedby="salary">
+	</div>
+	<div class="mb-3">
+		<label for="dateOfBirth" class="form-label">End Date</label>
+		<input type="date" class="form-control" id="dateofbirth" name="dateOfBirth" aria-describedby="dateOfBirth">
+	</div>
+	<button type="submit" class="btn btn-success" id="save-button">Search</button>
+	<button type="submit" class="btn btn-warning" id="reset-button">Reset</button>
+</form>
+
+<br />
+<table class="table table-striped table-hover table-responsive">
+	<thead class="table-primary">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Project Name</th>
+			<th scope="col">Employee Name</th>
+			<th scope="col">Client</th>
+			<th scope="col">Project Manager</th>
+			<th scope="col">Start Date</th>
+			<th scope="col">End Date</th>
+			<th scope="col">IsComplete</th>
+			<th scope="col" class="text-center">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var project in Model)
+		{
+			<tr>
+				<td scope="row">@project.ID</td>
+				<td>@project.ProjectName</td>
+				<td>@project.EmployeeName</td>
+				<td>@project.ClientName</td>
+				<td>@project.ProjectManager</td>
+				<td>@project.StartDate.ToString("yyyy-MM-dd")</td>
+				<td>@project.EndDate.ToString("yyyy-MM-dd")</td>
+				<td>@project.isComplete</td>
+				<td>
+					<form asp-action="Delete" asp-controller="ProjectEmployee" method="post">
+						<a type="button" class="btn btn-warning ms-2" href="ProjectEmployee/View/@project.ID">Edit</a>
+						<input type="hidden" name="id" value="@project.ID">
+						<button type="submit" class="btn btn-danger ms-2" onclick="return confirm('Are you sure you want to delete @project.ProjectName?')">Delete</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<a asp-controller="ProjectEmployee" asp-action="Add">
+	<button type="button" class="btn btn-primary">Add</button>
+</a>

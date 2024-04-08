@@ -1,0 +1,55 @@
+﻿@model myFirstWeb.Models.Domain.UpdateEmployeeProjectViewModel
+<h1>Edit Contract</h1>
+
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">ID</label>
+        <input type="text" class="form-control" asp-for="ID" readonly>
+
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Project</label>
+        <select class="form-control" asp-for="Developments" required>
+            <option value="">-- Select Project --</option>
+            @foreach (var project in ViewBag.Projects)
+            {
+                <option value="@project.ID">@project.DevelopmentName</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Employee</label>
+        <select class="form-control" asp-for="Employee" required>
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in ViewBag.Employees)
+            {
+                <option value="@employee.ID">@employee.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Start Date</label>
+        <input type="Date" class="form-control" asp-for="startDate" required>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">End Date</label>
+        <input type="Date" class="form-control" asp-for="endDate" required>
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Approval Status</label>
+        <select id="approvalStatus" class="form-control" asp-for="isComplete">
+            <option value="true">Approved</option>
+            <option value="false">Pending</option>
+        </select>
+    </div>
+
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
