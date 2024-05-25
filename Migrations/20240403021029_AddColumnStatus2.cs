@@ -11,29 +11,11 @@ namespace myFirstWeb.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
-            migrationBuilder.DropColumn(
-                name: "EmployeeName",
-                table: "Project");
-
             migrationBuilder.AddColumn<bool>(
                 name: "Status",
                 table: "Project",
                 type: "bit",
                 nullable: false);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Project_ID_employeeID",
-                table: "Project",
-                column: "ID_employeeID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Project_Employee_ID_employeeID",
-                table: "Project",
-                column: "ID_employeeID",
-                principalTable: "Employee",
-                principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
