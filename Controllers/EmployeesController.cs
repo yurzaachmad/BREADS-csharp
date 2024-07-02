@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using myFirstWeb.Data;
 using myFirstWeb.Models;
 using Newtonsoft.Json;
-using System.Globalization;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+using NuGet.Protocol;
 
 namespace myFirstWeb.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly EmployeeContext employeeContext;
+        private readonly ILogger<EmployeesController> logger;
 
-        public EmployeesController(EmployeeContext employeeContext)
+        public EmployeesController(EmployeeContext employeeContext, ILogger<EmployeesController> logger)
         {
             this.employeeContext = employeeContext;
+            this.logger = logger;
         }
 
         public ActionResult Login()
@@ -29,6 +28,7 @@ namespace myFirstWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
         {
+            logger.LogInformation("this list of employees for employees user: {user}", user.ToJson());
             if (ModelState.IsValid)
             {
              //   using (DB_Entities db = new DB_Entities())
